@@ -9,12 +9,22 @@ export default function DayListItem(props) {
     'day-list__item--full': !props.spots
   });
 
-  console.log(itemClass);
+  const formatSpots = () => {
+    let message;
+    if (props.spots === 0) {
+      message = 'no spots remaining';
+    } else if (props.spots === 1) {
+      message = '1 spot remaining';
+    } else {
+      message = `${props.spots} spots remaining`;
+    }
+    return message;
+  };
 
   return (
     <li className={itemClass} onClick={() => props.setDay(props.name)}>
-      <h2 className="text--regular">{props.name}</h2> 
-      <h3 className="text--light">{props.spots} spots remaining</h3>
+      <h2 className="text--regular">{props.name}</h2>
+      <h3 className="text--light">{formatSpots()}</h3>
     </li>
   );
 }
