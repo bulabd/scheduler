@@ -6,15 +6,34 @@ import Header from './Header';
 import Show from './Show';
 import Empty from './Empty';
 import Form from './Form';
+import Status from './Status';
 
 export default function Appointment(props) {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
+  const SAVING = "SAVING";
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+    return interview;
+  }
+
+  function book(student, interviewer) {
+    transition(SAVING);
+    props.bookInterview(props.id, save(student, interviewer))
+      .then(res => {
+        transition(SHOW);
+        return res;
+      });
+  }
 
   return (
     <article className="appointment">
@@ -26,7 +45,8 @@ export default function Appointment(props) {
           interviewer={props.interview.interviewer}
         />
       )}
-      {mode === CREATE && <Form interviewers={props.interviewers} onCancel={() => back()} onSave={() => console.log("Clicked onSave")} />}
+      {mode === CREATE && <Form interviewers={props.interviewers} onCancel={() => back()} onSave={(student, interviewer) => {book(student, interviewer)}} />}
+      {mode === SAVING && <Status message={'Saving'} />}
     </article>
   );
 }

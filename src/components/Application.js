@@ -14,9 +14,34 @@ export default function Application(props) {
     day: "Monday",
     days: [],
     appointments: {},
-    //
     interviewers: {}
   });
+
+
+  function updateAppointments(appointments) {
+    setState({
+      ...state,
+      appointments
+    });
+  }
+
+  function bookInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    return axios.put(`/api/appointments/${id}`, { interview })
+      .then(res => {
+          updateAppointments(appointments);
+          return res;
+        }
+      );
+  }
+
 
   
   const setDay = day => setState({...state, day});
@@ -32,21 +57,14 @@ export default function Application(props) {
   }, []);
   
   const dailyAppointments = getAppointmentsForDay(state, state.day);
-  // const appointmentsArray = dailyAppointments.map((appointment) => {
-  //   return (
-  //     <Appointment 
-  //       key={appointment.id} 
-  //       // {...appointment}
-  //       id={appointment.id}
-  //       time={appointment.time}
-  //       interview={appointment.interview}
-  //     />
-  //   );
-  // });
   const interviewersForDay = getInterviewersForDay(state, state.day);
 
   const appointmentsArray = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
+
+
+    //console.log("THIS IS APPOINTMENT", appointment);
+    //console.log('THIS IS INTERVIEW', interview);
 
     return (
       <Appointment 
@@ -54,8 +72,9 @@ export default function Application(props) {
         id={appointment.id}
         time={appointment.time}
         interview={interview}
-        //
         interviewers={interviewersForDay}
+        //
+        bookInterview={bookInterview}
       />
     );
   });
