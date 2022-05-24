@@ -9,11 +9,15 @@ export default function useApplicationData() {
     interviewers: {}
   });
 
-
-  function updateAppointments(appointments) {
-    setState({
-      ...state,
-      appointments
+  function updateSpots(newStateAppointments) {
+    return state.days.map((day) => {
+      let counter = 0;
+      for (let appointment of day.appointments) {
+        if (!newStateAppointments[appointment].interview) {
+          counter++;
+        }
+      }
+      return {...day, spots: counter};
     });
   }
 
@@ -26,9 +30,11 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
+    let updatedDays = updateSpots(appointments);
+
     return axios.put(`/api/appointments/${id}`, { interview })
       .then(res => {
-          updateAppointments(appointments);
+          setState({...state, appointments, days: updatedDays});
           return res;
         }
       );
@@ -44,9 +50,11 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     }
+    let updatedDays = updateSpots(appointments);
+
     return axios.delete(`/api/appointments/${id}`)
       .then(res => {
-        updateAppointments(appointments);
+        setState({...state, appointments, days: updatedDays});
         return res;
       });
   }
