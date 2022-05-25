@@ -10,6 +10,7 @@ import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "help
 import useApplicationData from "hooks/useApplicationData";
 
 export default function Application(props) {
+  // custoom hook
   const {
     state,
     setDay,
@@ -17,9 +18,11 @@ export default function Application(props) {
     cancelInterview
   } = useApplicationData();
 
+  // create an array of interviewers for a day
   const interviewersForDay = getInterviewersForDay(state, state.day);
 
   const appointmentsArray = getAppointmentsForDay(state, state.day).map((appointment) => {
+    // create an array of appointments for a day
     return (
       <Appointment 
         key={appointment.id} 
@@ -32,6 +35,7 @@ export default function Application(props) {
       />
     );
   });
+  // last appointment, always empty
   appointmentsArray.push(<Appointment key="last" time="5pm" />);
 
   return (

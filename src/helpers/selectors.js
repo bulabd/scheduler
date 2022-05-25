@@ -1,14 +1,18 @@
 export function getAppointmentsForDay(state, day) {
+  // return an array of appointments for a day
   if (!state.days.length) {
     return [];
   }
-  let appointmentsArray = state.days.filter(x => x.name === day) || [];
+
+  // get the array of appointments' ids
+  let appointmentsArray = state.days.filter(singleDay => singleDay.name === day) || [];
   if (appointmentsArray.length === 0) {
     return [];
   } else {
     appointmentsArray = appointmentsArray[0].appointments;
   }
 
+  // use the array of appointments' ids to return an array of appointments with every detail for each
   let finalAppointmentsArray = [];
   for (let appointment of appointmentsArray) {
     if (appointment in state.appointments) {
@@ -19,18 +23,22 @@ export function getAppointmentsForDay(state, day) {
 }
 
 export function getInterview(state, interview) {
+  // receive the interview obj with the interviewer id and return the same object but with all the interviewer details
   if (!interview) {
     return null;
   }
-  let newObj = {...interview};
-  newObj.interviewer = state.interviewers[interview.interviewer];
-  return newObj;
+  let newInterview = {...interview};
+  // use interviewer id to fetch interviewer details
+  newInterview.interviewer = state.interviewers[interview.interviewer];
+  return newInterview;
 }
 
 export function getInterviewersForDay(state, day) {
+  // return an array of interviewers available for a day
   if (!state.days.length) {
     return [];
   }
+  // get the array of interviewers' ids
   let interviewersArray = state.days.filter(x => x.name === day) || [];
   if (interviewersArray.length === 0) {
     return [];
@@ -38,6 +46,7 @@ export function getInterviewersForDay(state, day) {
     interviewersArray = interviewersArray[0].interviewers;
   }
 
+  // use the array of interviewers' ids to return an array of interviewers with every detail for each
   let finalInterviewersArray = [];
   for (let interviewer of interviewersArray) {
     if (interviewer in state.interviewers) {
@@ -46,49 +55,3 @@ export function getInterviewersForDay(state, day) {
   }
   return finalInterviewersArray;
 }
-
-
-
-// const state = {
-//   days: [
-//     {
-//       id: 1,
-//       name: "Monday",
-//       appointments: [1, 2, 3],
-//       interviewers: [1, 2]
-//     },
-//     {
-//       id: 2,
-//       name: "Tuesday",
-//       appointments: [4, 5],
-//       interviewers: [1, 2]
-//     }
-//   ],
-//   appointments: {
-//     "1": { id: 1, time: "12pm", interview: null },
-//     "2": { id: 2, time: "1pm", interview: null },
-//     "3": {
-//       id: 3,
-//       time: "2pm",
-//       interview: { student: "Archie Cohen", interviewer: 2 }
-//     },
-//     "4": { id: 4, time: "3pm", interview: null },
-//     "5": {
-//       id: 5,
-//       time: "4pm",
-//       interview: { student: "Chad Takahashi", interviewer: 2 }
-//     }
-//   },
-//   interviewers: {
-//     "1": {  
-//       "id": 1,
-//      "name": "Sylvia Palmer",
-//      "avatar": "https://i.imgur.com/LpaY82x.png"
-//    },
-//    "2": {
-//      id: 2,
-//      name: "Tori Malcolm",
-//      avatar: "https://i.imgur.com/Nmx0Qxo.png"
-//    }
-//  }
-// };

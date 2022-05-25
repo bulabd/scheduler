@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function Empty(props) {
+  // empty component (button) which displays if no appointment is taken at a specific time
   return (
     <main className="appointment__add">
       <img

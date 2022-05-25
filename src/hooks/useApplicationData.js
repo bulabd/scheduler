@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function useApplicationData() {
+  // useApplicationData custom hook
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -10,9 +11,11 @@ export default function useApplicationData() {
   });
 
   function updateSpots(newStateAppointments) {
+    // maps through the days and return the days array with the updated spots using the new appointments
     return state.days.map((day) => {
       let counter = 0;
       for (let appointment of day.appointments) {
+        // if the interview is null, increment the counter which is the amount of spots left
         if (!newStateAppointments[appointment].interview) {
           counter++;
         }
@@ -22,18 +25,24 @@ export default function useApplicationData() {
   }
 
   function bookInterview(id, interview) {
+    // books an interview by updating an appointment
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
+    
+    // update the appointments obj using the new appointment
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
+    
+    // update the spots using the updateSpots function and the new appointments obj
     let updatedDays = updateSpots(appointments);
 
     return axios.put(`/api/appointments/${id}`, { interview })
       .then(res => {
+          // update the state with the new appointments obj and days array
           setState({...state, appointments, days: updatedDays});
           return res;
         }
@@ -41,15 +50,19 @@ export default function useApplicationData() {
   }
 
   function cancelInterview(id) {
+    // cancels an interview by updating an appointment
     const appointment = {
       ...state.appointments[id],
       interview: null
     }
 
+    // update the appointments obj using the new appointment
     const appointments = {
       ...state.appointments,
       [id]: appointment
     }
+
+    // update the spots using the updateSpots function and the new appointments obj
     let updatedDays = updateSpots(appointments);
 
     return axios.delete(`/api/appointments/${id}`)
@@ -59,6 +72,7 @@ export default function useApplicationData() {
       });
   }
 
+  // function used to setDay when the user selects another day
   const setDay = day => setState({...state, day});
 
   useEffect(() => {

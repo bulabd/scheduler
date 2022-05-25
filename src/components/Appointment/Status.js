@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function Status(props) {
+  // status component which renders when an appointment is created, updated, deleted and displays a message accordingly
   return (
     <main className="appointment__card appointment__card--status">
       <img

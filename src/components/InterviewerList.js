@@ -5,7 +5,9 @@ import InterviewerListItem from "./InterviewerListItem";
 import PropTypes from 'prop-types';
 
 export default function InterviewerList(props) {
+  // InterviewerList component which displays the available interviewers for a certain appointment
   const interviewers = props.interviewers.map((interviewer) => {
+    // create an array of interviewers
     return (
       <InterviewerListItem 
         key={interviewer.id}
@@ -27,6 +29,7 @@ export default function InterviewerList(props) {
   );
 }
 
+// require the interviewers to be an array
 InterviewerList.propTypes = {
   interviewers: PropTypes.array.isRequired
 };

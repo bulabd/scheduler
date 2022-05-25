@@ -4,12 +4,14 @@ import 'components/DayListItem.scss';
 import classNames from "classnames";
 
 export default function DayListItem(props) {
+  // DayListItem component which represents each day in the navbar
   let itemClass = classNames('day-list__item', {
     'day-list__item--selected': props.selected,
     'day-list__item--full': !props.spots
   });
 
   const formatSpots = () => {
+    // display the right message according to the amount of spots left
     let message;
     if (props.spots === 0) {
       message = 'no spots remaining';

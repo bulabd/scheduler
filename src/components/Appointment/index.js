@@ -11,6 +11,7 @@ import Confirm from './Confirm';
 import Error from './Error';
 
 export default function Appointment(props) {
+  // display modes which change with user interaction and display components accordingly
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -23,10 +24,12 @@ export default function Appointment(props) {
   const ERROR_DELETE = "ERROR_DELETE";
 
   const { mode, transition, back } = useVisualMode(
+    // custom hook to update mode
     props.interview ? SHOW : EMPTY
   );
 
   function save(name, interviewer) {
+    // update the interview object with the new interview
     const interview = {
       student: name,
       interviewer
@@ -35,14 +38,18 @@ export default function Appointment(props) {
   }
 
   function book(student, interviewer) {
+    // display saving animation after an interview is booked
     transition(SAVING, true);
+    // book interview and update database
     props.bookInterview(props.id, save(student, interviewer))
       .then(() => transition(SHOW))
       .catch(error => transition(ERROR_SAVE, true));
   }
 
   function deleteInterview() {
+    // display deleting animation after an interview is booked
     transition(DELETING, true);
+    // delete interview and update database 
     props.cancelInterview(props.id)
       .then(() => transition(EMPTY))
       .catch(error => transition(ERROR_DELETE, true));

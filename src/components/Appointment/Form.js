@@ -8,6 +8,7 @@ export default function Form(props) {
   const [error, setError] = useState("");
 
   function validate() {
+    // validate if the user entered a name and selected an interviewer before saving the appointment
     if (student === "") {
       setError("Student name cannot be blank");
       return;
@@ -24,11 +25,13 @@ export default function Form(props) {
 
 
   const reset = () => {
+    // resets the form to be empty
     setStudent("");
     setInterviewer(null);
   };
 
   const cancel = () => {
+    // cancel form update and/or creation
     reset();
     props.onCancel();
   };
@@ -42,15 +45,13 @@ export default function Form(props) {
             name="name"
             type="text"
             placeholder="Enter Student Name"
-            /* your code goes here */
-            onChange={(event) => setStudent(event.target.value)}
-            value={student ? student : ''}
+            onChange={(event) => setStudent(event.target.value)} /*set the entered name after every input*/
+            value={student ? student : ''} /*if editing appointment, the input field will have the name of the student already in place*/
             data-testid="student-name-input"
           />
         </form>
         <section className="appointment__validation">{error}</section>
         <InterviewerList 
-          /* your code goes here */
           interviewers={props.interviewers}
           value={interviewer}
           onChange={setInterviewer}

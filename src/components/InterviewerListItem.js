@@ -3,6 +3,7 @@ import 'components/InterviewerListItem.scss';
 import classNames from "classnames";
 
 export default function InterviewerListItem(props) {
+  // InterviewerListItem component which displays each available interviewer
   const itemClass = classNames('interviewers__item', {
     'interviewers__item--selected': props.selected
   });
