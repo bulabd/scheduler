@@ -5,10 +5,10 @@ In it, a user can create, update, delete interviews for each day of the week.
 
 ## Final Product
 
-!["Screenshot of the web app"]();
-!["Screenshot of the form to create an interview"]();
-!["Screenshot of the newly created interview"]();
-!["Screenshot of the warning message when you want to delete an interview"]();
+!["Screenshot of the web app"](https://github.com/bulabd/scheduler/blob/master/docs/web-app.png?raw=true);
+!["Screenshot of the form to create an interview"](https://github.com/bulabd/scheduler/blob/master/docs/form.png?raw=true);
+!["Screenshot of the newly created interview"](https://github.com/bulabd/scheduler/blob/master/docs/completed-form.png?raw=true);
+!["Screenshot of the warning message when you want to delete an interview"](https://github.com/bulabd/scheduler/blob/master/docs/delete-message.png?raw=true);
 
 ## Setup
 
