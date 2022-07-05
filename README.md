@@ -12,7 +12,7 @@ In it, a user can create, update, delete interviews for each day of the week.
 
 ## Setup
 
-Fork and clone [this repo](https://github.com/lighthouse-labs/scheduler-api)
+Fork and clone [this repo](https://github.com/lighthouse-labs/scheduler-api) and follow the README instructions.
 
 Install dependencies with `npm install`.
 
